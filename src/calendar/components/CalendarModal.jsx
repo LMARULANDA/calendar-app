@@ -9,6 +9,9 @@ import { useMemo, useState } from "react";
 import Modal from "react-modal";
 
 import es from "date-fns/locale/es";
+import { useUiStore } from "../../hooks/useUiStore";
+
+import {useDispatch} from 'react-redux';
 
 registerLocale('es',es);
 
@@ -26,7 +29,8 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+
+  const {isDateModalOpen,closeDateModal}= useUiStore();
   const [formSubmited, setFormSubmited] = useState(false);
 
   const [formValues, setFormValues] = useState({
@@ -59,7 +63,7 @@ export const CalendarModal = () => {
   };
 
   const onCloseModal = () => {
-    setIsOpen(false);
+    closeDateModal();
   };
 
   const onSubmit = (event) => {
@@ -77,7 +81,7 @@ export const CalendarModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isDateModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
       className="modal"
